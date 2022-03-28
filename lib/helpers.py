@@ -4,11 +4,15 @@ from lib.toberemoved.suporter import Supporter
 import json
 
 import threading
+
+
 supporter = Supporter()
+
 filesystem = Files(
     logger = supporter.log,
     errorhandler = supporter.full_stack
 )
+
 def setInterval(interval):
     def decorator(function):
         def wrapper(*args, **kwargs):
@@ -18,8 +22,8 @@ def setInterval(interval):
                 while not stopped.wait(interval): # until stopped
                     try:
                         function(*args, **kwargs)
-                    except NotImplementedError:
-                        supporter.log.error("NotImplementedError")
+                    except Exception as e:
+                        supporter.log.error(f"Exception {e} acurred ")
                         pass
             t = threading.Thread(target=loop)
             t.daemon = True # stop if the program exits
@@ -58,7 +62,7 @@ def get_all_posts():
             if not payload["isDeleted"]:
                 continue
 
-        all_posts.append(payload)
+            all_posts.append(payload)
     return all_posts
 
 
@@ -83,7 +87,7 @@ def converter(msgs,guid_id):
     with open('guilds.json', 'r') as f:
         guilds = json.load(f)
     for guild in guilds:
-        if guild["guid"]['id'] == guid_id:
+        if guild["guids"]['id'] == guid_id:
             dataConvert =  guild['dataConvert']
             guild1 = guild
             break

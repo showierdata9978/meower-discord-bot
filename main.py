@@ -9,7 +9,7 @@ get_all_posts
 
 
 class MeowerBot(commands.Bot):
-    def __init__(self, prefix,discription=None ,**options):
+    def __init__(self, prefix="MeowerBot!",discription=None ,**options):
         chc = self.Check_for_message_in_fs()
         super().__init__(prefix, discription,**options)
 
@@ -28,8 +28,10 @@ class MeowerBot(commands.Bot):
                         msg['chat_id'] = sg.id
                     channel.send_message(msg)
         self.Cashe_messages('bot_storage/guilds.json',converted_msgs,guild)
+    
     @setInterval(5)
     def Check_for_message_in_fs(self):
+        
         raise NotImplementedError(self.Check_for_message_in_fs)
     
     @staticmethod
